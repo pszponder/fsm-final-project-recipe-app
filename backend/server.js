@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 // =====================
 // SETUP ROUTE ENDPOINTS
 // =====================
-// app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 // ======================================
 // INITIALIZE CUSTOM MODULES / MIDDLEWARE
