@@ -31,4 +31,5 @@ npm run server
 
 ## References / Resources Used:
 
-[Traversy Media: Learn the MERN Stack](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
+[Traversy Media: Learn the MERN Stack](https://youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
+[Node.js Full Course for Beginners | Complete All-in-One Tutorial](https://youtu.be/f2EqECiTBL8)
