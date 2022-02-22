@@ -5,6 +5,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const mongoose = require('mongoose');
 
 // Custom Middleware
 const { errorHandler } = require('./middleware/errorHandler');
@@ -35,13 +36,15 @@ app.use(express.urlencoded({ extended: false }));
 // =====================
 // SETUP ROUTE ENDPOINTS
 // =====================
-app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/users', require('./routes/authRoutes'));
+app.use('/api/ingredients', require('./routes/ingredientRoutes'));
+app.use('/api/recipes', require('./routes/recipeRoutes'));
 
 // ======================================
 // INITIALIZE CUSTOM MODULES / MIDDLEWARE
 // ======================================
 
-// Overwrite Node's error handling
+// Overwrite Default ExpressJS error handling
 app.use(errorHandler);
 
 // ======================================
@@ -52,4 +55,7 @@ const PORT = process.env.PORT || 5000;
 // ==============
 // LISTEN TO PORT
 // ==============
-app.listen(PORT, () => console.log(`Server listening on port ${PORT} ...`));
+// Only start listening after connection to DB is established
+mongoose.connection.once('open', () => {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}...`));
+});
