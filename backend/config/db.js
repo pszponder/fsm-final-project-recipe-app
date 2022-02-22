@@ -7,7 +7,7 @@ const connectDB = async () => {
     const conn = await mongoose.connect(process.env.MONGO_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.log(error.mesage);
+    console.log(error.message);
     process.exit(1); // Exit Node Process with an 'Uncaught Fatal Exception' Event Handler
   }
 };
