@@ -9,9 +9,12 @@ const errorHandler = (err, req, res, next) => {
   // Add a custom Error Object to the response
   // Only show a stack trace when not in production environment
   res.json({
+    status: err.status,
     message: err.message,
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
+
+  next();
 };
 
 module.exports = { errorHandler };
