@@ -8,7 +8,7 @@
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js"
   },
-  "author": "Piotr Szponder, Hamid Abassi, Bobbi Fuller",
+  "author": "Piotr Szponder, Bobbi Fuller",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
