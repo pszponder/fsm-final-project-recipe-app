@@ -37,6 +37,9 @@ app.use(express.urlencoded({ extended: false }));
 // SETUP ROUTE ENDPOINTS
 // =====================
 app.use('/api/users', require('./routes/authRoutes'));
+
+// TODO: ADD JWT REFRESH TOKEN CHECK HERE (VIA CUSTOM MIDDLEWARE)
+// TODO: ADD JWT ACCESS TOKEN AUTHORIZATION HERE (VIA CUSTOM MIDDLEWARE)
 app.use('/api/ingredients', require('./routes/ingredientRoutes'));
 app.use('/api/recipes', require('./routes/recipeRoutes'));
 
