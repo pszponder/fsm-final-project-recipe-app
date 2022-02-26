@@ -11,9 +11,9 @@ const User = require('../models/userModel');
 // =====================
 // CREATE HELPER METHODS
 // =====================
-// TODO: ADD DIFFERENT CONSTANTS FOR ACCESS AND REFRESH TOKENS
-const MAX_AGE_DAYS = 1; // EDIT THIS VALUE TO CHANGE THE EXPIRATION DATE OF THE JWT TOKEN
-const MAX_AGE_MINUTES = 10;
+// TODO: CONSIDER MOVING THESE HELPER METHODS (and constants) TO THEIR OWN FILES (maybe put them in a utils folder?)
+const MAX_AGE_ACCESS_TOKEN = '1d';
+const MAX_AGE_REFRESH_TOKEN = '15s';
 
 /**
  * Return a JTW Token based on a user id, a secret, and an expiration time
@@ -23,7 +23,7 @@ const MAX_AGE_MINUTES = 10;
  * @returns JTW Token
  */
 const createJTW = (id, secret, expirationTime) => {
-  return jwt.sign({ id }, process.env[secret], {
+  return jwt.sign({ id: id }, process.env[secret], {
     expiresIn: expirationTime,
   });
 };
@@ -62,7 +62,8 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('User already exists');
   }
 
-  // TODO: ADD JWT LOGIC
+  // TODO: ADD JWT LOGIC?
+  // ! Maybe we don't need JWT LOGIC ON REGISTER, JUST AT LOGIN, WHEN USER REGISTERS, REDIRECT THEM TO THE LOGIN PAGE
 
   // Create an encrypted password
   const salt = await bcrypt.genSalt();
@@ -108,6 +109,33 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   // TODO: ADD JWT LOGIC
+
+  // Create accessToken
+  const accessToken = createJTW(
+    foundUser._id,
+    ACCESS_TOKEN_SECRET,
+    MAX_AGE_ACCESS_TOKEN
+  );
+
+  // Create refreshToken
+  const refreshToken = createJTW(
+    foundUser._id,
+    REFRESH_TOKEN_SECRET,
+    MAX_AGE_REFRESH_TOKEN
+  );
+
+  // TODO: Add/update refresh token of the found user in the DB (need to add refreshToken into userModel)
+
+  // Add the refresh token to a cookie and send it to the client (httpOnly cookie not available to JS)
+  // TODO: Incorporate this after the email and password validation is completes in the if statement
+  res.cookie('jwt', refreshToken, {
+    httpOnly: true,
+    maxAge: MAX_AGE_REFRESH_TOKEN * 24 * 60 * 60 * 1000,
+  });
+
+  // Return access token to the client
+  // TODO: Incorporate this after the email and password validation is completes in the if statement
+  res.json({ accessToken });
 
   // If email and password are correct, grant user access to App
   if (foundUser && correctPassword) {
