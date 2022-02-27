@@ -143,6 +143,7 @@ const loginUser = asyncHandler(async (req, res) => {
       message: `Logging in user: ${foundUser.firstName} ${foundUser.lastName}`,
       email,
       password,
+      ingredients: foundUser.ingredients,
     });
   } else {
     res.status(400);

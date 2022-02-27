@@ -40,6 +40,8 @@ app.use('/api/users', require('./routes/authRoutes'));
 
 // TODO: ADD JWT REFRESH TOKEN CHECK HERE (VIA CUSTOM MIDDLEWARE)
 // TODO: ADD JWT ACCESS TOKEN AUTHORIZATION HERE (VIA CUSTOM MIDDLEWARE)
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/ingredients', require('./routes/ingredientRoutes'));
 app.use('/api/recipes', require('./routes/recipeRoutes'));
 
