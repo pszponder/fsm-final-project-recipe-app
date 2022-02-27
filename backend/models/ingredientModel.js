@@ -19,11 +19,6 @@ const ingredientSchema = new mongoose.Schema(
       required: [true, 'Please provide a food group for the ingredient'],
       lowercase: true,
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'Error linking user to ingredient'],
-    },
   },
   {
     timestamps: true,

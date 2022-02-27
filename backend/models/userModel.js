@@ -29,6 +29,11 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Please enter a password'],
       minlength: [6, 'Password must be 6 or more characters long'],
     },
+    ingredients: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Ingredient',
+      default: [],
+    },
   },
   {
     timestamps: true,

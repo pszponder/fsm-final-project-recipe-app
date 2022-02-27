@@ -17,10 +17,12 @@ const recipesSchema = new mongoose.Schema(
     recipeDescription: {
       type: String,
       required: [true, 'Please enter a description for your recipe'],
+      lowercase: true,
     },
     recipeDirections: {
       type: [String],
       required: [true, 'Please enter directions for your recipe'],
+      lowercase: true,
     },
     recipeIngredients: {
       type: [
