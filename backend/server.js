@@ -36,7 +36,8 @@ app.use(express.urlencoded({ extended: false }));
 // =====================
 // SETUP ROUTE ENDPOINTS
 // =====================
-app.use('/api/users', require('./routes/authRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/ingredients', require('./routes/ingredientRoutes'));
 app.use('/api/recipes', require('./routes/recipeRoutes'));
 
