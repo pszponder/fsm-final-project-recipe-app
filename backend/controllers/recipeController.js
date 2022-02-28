@@ -123,8 +123,6 @@ const updateRecipe = asyncHandler(async (req, res) => {
   const newRecipeDescription = req.body.recipeDescription;
   const newRecipeDirections = req.body.recipeDirections;
   const newRecipeIngredients = req.body.recipeIngredients;
-  console.log('recipeName', recipeName);
-  console.log('newRecipeName', newRecipeName);
 
   // Error handling if the new recipe name already exists in DB
   const foundNewRecipe = await Recipe.findOne({ recipeName: newRecipeName });
