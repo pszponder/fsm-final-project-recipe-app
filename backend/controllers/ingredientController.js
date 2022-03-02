@@ -4,7 +4,7 @@
 const asyncHandler = require('express-async-handler');
 
 // Import models
-const Ingredient = require('../models/ingredientModel');
+const { Ingredient } = require('../models/ingredientModel');
 
 // =====================
 // CREATE HELPER METHODS
