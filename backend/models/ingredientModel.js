@@ -31,4 +31,5 @@ const ingredientSchema = new mongoose.Schema(
 // The model is the interface mongoose will use to communicate
 //  with the database collection for the specified document type (ingredients)
 const Ingredient = mongoose.model('ingredient', ingredientSchema);
-module.exports = Ingredient;
+
+module.exports = { Ingredient, ingredientSchema };

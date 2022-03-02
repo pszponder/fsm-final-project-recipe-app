@@ -25,7 +25,7 @@ router.get('/ingredients/:name', getIngredient);
 router.get('/ingredients', getAllIngredients);
 
 // PUT
-router.put('/ingredients/:name', updateIngredient);
+// router.put('/ingredients/:name', updateIngredient);
 
 // DELETE
 router.delete('/ingredients/:name', deleteIngredient);
