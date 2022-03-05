@@ -3,7 +3,6 @@
 // ===================
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
-const { ingredientSchema } = require('../models/ingredientModel');
 
 // ========================================================
 // DEFINE SCHEMA (SHAPE) FOR THE user COLLECTION IN MONGODB
@@ -31,7 +30,7 @@ const userSchema = new mongoose.Schema(
       minlength: [6, 'Password must be 6 or more characters long'],
     },
     ingredients: {
-      type: [ingredientSchema],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ingredient' }],
       default: [],
     },
   },

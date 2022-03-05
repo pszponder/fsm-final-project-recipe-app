@@ -32,4 +32,4 @@ const ingredientSchema = new mongoose.Schema(
 //  with the database collection for the specified document type (ingredients)
 const Ingredient = mongoose.model('ingredient', ingredientSchema);
 
-module.exports = { Ingredient, ingredientSchema };
+module.exports = { Ingredient };
