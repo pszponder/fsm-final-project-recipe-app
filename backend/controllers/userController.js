@@ -5,104 +5,192 @@ const asyncHandler = require('express-async-handler');
 
 // Import models
 const User = require('../models/userModel');
-const Ingredient = require('../models/ingredientModel');
+const { Ingredient } = require('../models/ingredientModel');
 
 // =====================
 // CREATE HELPER METHODS
 // =====================
+// Error handling if no data is passed into the body
+function handleEmptyBody(req, res) {
+  if (Object.keys(req.body).length === 0) {
+    res.status(400);
+    throw new Error(
+      'Please submit all required recipe properties in the body of the request'
+    );
+  }
+}
 
 // =============================
 // CREATE LOGIC FOR HTTP METHODS
 // =============================
 
-// TODO: ADD BASE LOGIC
-// TODO: COMPLETE ENTIRE LOGIC
 /**
- * @desc    Add a new ingredient to the db
+ * @desc    Add a list of ingredient Ids to the user's list of ingredients
  * @route   POST /api/users/ingredients
  * @access  Private
  */
-const addIngredient = asyncHandler(async (req, res) => {
+const addIngredientById = asyncHandler(async (req, res) => {
   // Error Handling if request body is empty
+  handleEmptyBody(req, res);
 
   // Deconstruct body from request
-  const { ingredientName, foodGroup, user } = req.body;
+  const { ingredientIds, userId } = req.body;
 
   // Find the user in the DB
-  const foundUser = await User.findById(user._id);
+  const foundUser = await User.findById(userId).populate('ingredients');
 
   // Error Handling if the user does not exist
+  if (!foundUser) {
+    res.status(404);
+    throw new Error('User does not exist');
+  }
 
-  res.status(201).json({
-    message: 'Ingredient Added',
-    ingredientName: ingredientName,
-    foodGroup: foodGroup,
-  });
+  // Add the array of ingredient Ids to the user's ingredients array
+  for (const ingredientId of ingredientIds) {
+    // Check that the ingredientId exists in the ingredients DB
+    const foundIngredient = await Ingredient.findById(ingredientId);
+    if (!foundIngredient) {
+      res.status(404);
+      throw new Error(`Ingredient with ID ${ingredientId} not found in DB`);
+    }
+
+    // Check whether or not the ingredient ID exists in the user's ingredients array
+    const ingredientAlreadyExists = foundUser.ingredients.findIndex(
+      (ingredient) => ingredient._id.equals(ingredientId)
+    );
+
+    if (ingredientAlreadyExists === -1) {
+      // Push the id into the user's ingredients array
+      foundUser.ingredients.push(ingredientId);
+    }
+  }
+
+  // Update the user in the DB with the ingredients array
+  const updatedFoundUser = await foundUser.save();
+  if (!updatedFoundUser) {
+    res.status(500);
+    throw new Error(
+      `Server Error: Problem saving Ingredient ID ${ingredientId} to user's list of ingredients`
+    );
+  } else {
+    res.status(200).json({
+      message:
+        "Successfully saved new ingredients into user's list of ingredients",
+    });
+  }
 });
 
-// TODO: ADD BASE LOGIC
-// TODO: COMPLETE ENTIRE LOGIC
 /**
- * @desc    Retrieve an ingredient of specified name from the db for given user
- * @route   GET /api/users/ingredients/:name
- * @access  Private
- */
-const getIngredient = asyncHandler(async (req, res) => {
-  const ingredientName = req.params.name;
-  res.status(200).json({ message: `Ingredient retrieved`, ingredientName });
-});
-
-// TODO: ADD BASE LOGIC
-// TODO: COMPLETE ENTIRE LOGIC
-/**
- * @desc    Retrieve all ingredients from the db for given user
+ * @desc    Retrieve all ingredients from the users list of ingredients
  * @route   GET /api/users/ingredients
  * @access  Private
  */
 const getAllIngredients = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: 'All ingredients retrieved' });
+  // Deconstruct body from request
+  const { userId } = req.body;
+
+  // Find the user in the DB
+  const foundUser = await User.findById(userId).populate('ingredients');
+
+  // Error Handling if the user does not exist
+  if (!foundUser) {
+    res.status(404);
+    throw new Error('User does not exist');
+  }
+
+  // Check if the user's ingredients list is empty
+  if (foundUser.ingredients.length === 0) {
+    res.status(404);
+    throw new Error('User does not have any ingredients yet');
+  }
+  res.status(200).json(foundUser.ingredients);
 });
 
-// TODO: ADD BASE LOGIC
-// TODO: COMPLETE ENTIRE LOGIC
 /**
- * @desc    Update an ingredient of specified name from the db for given user
- * @route   PUT /api/users/ingredients/:name
+ * @desc    Delete an ingredient of specified id from the user's ingredients list
+ * @route   DELETE /api/users/ingredients/:ingredientId
  * @access  Private
  */
-const updateIngredient = asyncHandler(async (req, res) => {
-  const ingredientName = req.params.name;
-  const newIngredientName = req.body.ingredientName;
-  const newFoodGroup = req.body.foodGroup;
+const deleteIngredientById = asyncHandler(async (req, res) => {
+  // Error Handling if request body is empty
+  handleEmptyBody(req, res);
+
+  // Extract the ingredientId from the parameter
+  const ingredientId = req.params.ingredientId;
+
+  // Deconstruct body from request
+  const { userId } = req.body;
+
+  // Find the user in the DB
+  const foundUser = await User.findById(userId).populate('ingredients');
+
+  // Error Handling if the user does not exist
+  if (!foundUser) {
+    res.status(404);
+    throw new Error('User does not exist');
+  }
+
+  // Locate the index of the ingredientId in the user's list of ingredients
+  const ingredientIndex = foundUser.ingredients.findIndex((ingredient) =>
+    ingredient._id.equals(ingredientId)
+  );
+
+  // If the ingredient is not found, return an error
+  if (ingredientIndex === -1) {
+    res.status(404);
+    throw new Error(
+      `IngredientId ${ingredientId} not found in user's ingredients list`
+    );
+  }
+
+  // Remove the ingredient at ingredientIndex
+  let removedIngredient = [];
+  try {
+    removedIngredient = foundUser.ingredients.splice(ingredientIndex, 1);
+    await foundUser.save();
+  } catch (error) {
+    req.status(500);
+    throw new Error(error);
+  }
 
   res.status(200).json({
-    message: `Ingredient updated: ${ingredientName}`,
-    newIngredientName,
-    newFoodGroup,
+    message: `Ingredient ID ${ingredientId} removed from user's list of ingredients`,
+    removedIngredient: removedIngredient[0],
   });
 });
 
-// TODO: ADD BASE LOGIC
-// TODO: COMPLETE ENTIRE LOGIC
-/**
- * @desc    Delete an ingredient of specified name from the db for given user
- * @route   DELETE /api/users/ingredients/:name
- * @access  Private
- */
-const deleteIngredient = asyncHandler(async (req, res) => {
-  const ingredientName = req.params.name;
-  res.status(200).json({ message: `Ingredient deleted`, ingredientName });
-});
-
-// TODO: ADD BASE LOGIC
-// TODO: COMPLETE ENTIRE LOGIC
 /**
  * @desc    Delete all ingredients from the db for given user
  * @route   DELETE /api/users/ingredients
  * @access  Private
  */
-const deleteAllIngredients = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: 'All Ingredients deleted' });
+const deleteAllIngredientsById = asyncHandler(async (req, res) => {
+  // Error Handling if request body is empty
+  handleEmptyBody(req, res);
+
+  // Deconstruct body from request
+  const { userId } = req.body;
+
+  // Find the user in the DB
+  const foundUser = await User.findById(userId);
+
+  // Error Handling if the user does not exist
+  if (!foundUser) {
+    res.status(404);
+    throw new Error('User does not exist');
+  }
+
+  // Set the user's ingredients array to an empty array
+  foundUser.ingredients = [];
+  const removedAllIngredients = await foundUser.save();
+
+  // Error Handling if await fails
+  if (removedAllIngredients.ingredients.length != 0) {
+    res.status(500);
+    throw new Error('Unable to remove all ingredients');
+  }
+
+  res.status(200).json({ message: "All Ingredients Removed from User's List" });
 });
 
 // =========================
@@ -110,10 +198,8 @@ const deleteAllIngredients = asyncHandler(async (req, res) => {
 // =========================
 
 module.exports = {
-  addIngredient,
-  getIngredient,
+  addIngredientById,
   getAllIngredients,
-  updateIngredient,
-  deleteIngredient,
-  deleteAllIngredients,
+  deleteIngredientById,
+  deleteAllIngredientsById,
 };
