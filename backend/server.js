@@ -11,7 +11,7 @@ const cors = require('cors');
 
 // Custom Middleware
 const { errorHandler } = require('./middleware/errorHandler');
-// const { verifyJWTRefreshToken } = require('./middleware/verifyJWTRefreshToken'); // TODO REMOVE
+const { refreshJWTAccessToken } = require('./middleware/refreshJWTAccessToken');
 const { verifyJWTAccessToken } = require('./middleware/verifyJWTAccessToken');
 
 const corsOptions = require('./config/corsOptions');
@@ -54,7 +54,7 @@ app.use(cors(corsOptions)); // Enable CORS and pass in CORS configuration object
 app.use('/api/auth', require('./routes/authRoutes'));
 
 // Handle JWT Access and Refresh Tokens
-// app.use(verifyJWTRefreshToken); // If we have a valid Refresh Token, Continue
+app.use(refreshJWTAccessToken); // Refresh the access token
 app.use(verifyJWTAccessToken); // If we have authorization, Continue
 
 app.use('/api/users', require('./routes/userRoutes'));
