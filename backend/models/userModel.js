@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Please enter a password'],
       minlength: [6, 'Password must be 6 or more characters long'],
     },
+    refreshToken: {
+      type: String,
+      default: '',
+    },
     ingredients: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ingredient' }],
       default: [],
