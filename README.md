@@ -44,3 +44,4 @@ node backend/seed/seedDB.js
 - [Traversy Media: Learn the MERN Stack](https://youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
 - [Node.js Full Course for Beginners | Complete All-in-One Tutorial](https://youtu.be/f2EqECiTBL8)
 - [What are Refresh Tokens and How to Use Them Securely](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/)
+- [JWT Authentication with Access Tokens & Refresh Tokens - Node.js](https://youtu.be/XYjOteYbCMo)
