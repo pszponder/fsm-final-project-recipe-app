@@ -15,7 +15,7 @@ function handleEmptyBody(req, res) {
   if (Object.keys(req.body).length === 0) {
     res.status(400);
     throw new Error(
-      'Please submit all required recipe properties in the body of the request'
+      'Please submit all required properties in the body of the request'
     );
   }
 }
@@ -33,8 +33,11 @@ const addIngredientById = asyncHandler(async (req, res) => {
   // Error Handling if request body is empty
   handleEmptyBody(req, res);
 
+  // Extract userId from req
+  const userId = req.userId;
+
   // Deconstruct body from request
-  const { ingredientIds, userId } = req.body;
+  const { ingredientIds } = req.body;
 
   // Find the user in the DB
   const foundUser = await User.findById(userId).populate('ingredients');
@@ -86,8 +89,8 @@ const addIngredientById = asyncHandler(async (req, res) => {
  * @access  Private
  */
 const getAllIngredients = asyncHandler(async (req, res) => {
-  // Deconstruct body from request
-  const { userId } = req.body;
+  // Extract userId from req
+  const userId = req.userId;
 
   // Find the user in the DB
   const foundUser = await User.findById(userId).populate('ingredients');
@@ -112,14 +115,11 @@ const getAllIngredients = asyncHandler(async (req, res) => {
  * @access  Private
  */
 const deleteIngredientById = asyncHandler(async (req, res) => {
-  // Error Handling if request body is empty
-  handleEmptyBody(req, res);
+  // Extract userId from req
+  const userId = req.userId;
 
   // Extract the ingredientId from the parameter
   const ingredientId = req.params.ingredientId;
-
-  // Deconstruct body from request
-  const { userId } = req.body;
 
   // Find the user in the DB
   const foundUser = await User.findById(userId).populate('ingredients');
@@ -165,11 +165,8 @@ const deleteIngredientById = asyncHandler(async (req, res) => {
  * @access  Private
  */
 const deleteAllIngredientsById = asyncHandler(async (req, res) => {
-  // Error Handling if request body is empty
-  handleEmptyBody(req, res);
-
-  // Deconstruct body from request
-  const { userId } = req.body;
+  // Extract userId from req
+  const userId = req.userId;
 
   // Find the user in the DB
   const foundUser = await User.findById(userId);
