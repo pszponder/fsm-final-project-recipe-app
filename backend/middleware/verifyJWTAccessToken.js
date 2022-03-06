@@ -4,9 +4,6 @@
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 
-// Import "User" model
-const User = require('../models/userModel');
-
 // ============================================================
 // DEFINE MIDDLEWARE TO HANDLE VERIFICATION OF JWT ACCESS TOKEN
 // ============================================================
@@ -42,4 +39,7 @@ const verifyJWTAccessToken = asyncHandler(async (req, res, next) => {
   next();
 });
 
+// =================
+// EXPORT MIDDLEWARE
+// =================
 module.exports = { verifyJWTAccessToken };
