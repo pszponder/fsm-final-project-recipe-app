@@ -5,9 +5,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// SETUP REDUX STORE USING REDUX TOOLKIT
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+const globalStore = configureStore({
+  reducer: {},
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={globalStore}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
