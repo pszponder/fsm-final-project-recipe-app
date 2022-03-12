@@ -8,10 +8,15 @@ import reportWebVitals from './reportWebVitals';
 // Import Provider for Context Related to Authorization
 import { AuthProvider } from './context/AuthProvider';
 
+// Import Provider for Context Related to Data
+import { DataProvider } from './context/DataProvider';
+
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <App />
+      <DataProvider>
+        <App />
+      </DataProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
