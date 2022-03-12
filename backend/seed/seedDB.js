@@ -7,7 +7,7 @@ const recipesArray = require('./dataRecipes');
 // ======================
 // IMPORT MONGOOSE MODELS
 // ======================
-const Ingredient = require('../models/ingredientModel');
+const { Ingredient } = require('../models/ingredientModel');
 const Recipe = require('../models/recipeModel');
 
 // ===========================
