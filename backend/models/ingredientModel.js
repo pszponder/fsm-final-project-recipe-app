@@ -11,7 +11,6 @@ const ingredientSchema = new mongoose.Schema(
     ingredientName: {
       type: String,
       required: [true, 'Please enter the name of your ingredient'],
-      unique: true,
       lowercase: true,
     },
     foodGroup: {
