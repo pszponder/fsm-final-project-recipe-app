@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // IMPORT PAGES (COMPONENTS)
 import Register from './pages/Register';
 import Login from './pages/Login';
-import Main from './pages/Main';
+import SelectIngredients from './pages/SelectIngredients';
 import RecipeList from './pages/RecipeList';
 import RecipeDetail from './pages/RecipeDetail';
 
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<SelectIngredients />} />
           <Route path="/recipe-list" element={<RecipeList />} />
           <Route path="/recipe-detail" element={<RecipeDetail />} />
         </Routes>
