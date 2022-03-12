@@ -17,7 +17,9 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('/api/auth/login', loginData);
+      const response = await axios.post('/api/auth/login', loginData, {
+        withCredentials: true,
+      });
 
       setAccessToken(response.data.accessToken);
     } catch (error) {
