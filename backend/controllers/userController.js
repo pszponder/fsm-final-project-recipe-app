@@ -103,8 +103,9 @@ const getAllIngredients = asyncHandler(async (req, res) => {
 
   // Check if the user's ingredients list is empty
   if (foundUser.ingredients.length === 0) {
-    res.status(404);
-    throw new Error('User does not have any ingredients yet');
+    // res.status(404);
+    // throw new Error('User does not have any ingredients yet');
+    return res.status(200).json([]);
   }
   res.status(200).json(foundUser.ingredients);
 });
