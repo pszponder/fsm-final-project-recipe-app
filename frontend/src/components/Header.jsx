@@ -19,6 +19,9 @@ function Header() {
             <Link to="/logout">Logout</Link>
           </li>
           <li>
+            <Link to="/">Main Page</Link>
+          </li>
+          <li>
             <Link to="/recipe-list">Recipe List</Link>
           </li>
           <li>
