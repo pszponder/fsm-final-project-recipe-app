@@ -7,6 +7,7 @@ const router = express.Router(); // Instantiate router
 const {
   addIngredientById,
   getAllIngredients,
+  updateIngredientsById,
   deleteIngredientById,
   deleteAllIngredientsById,
 } = require('../controllers/userController');
@@ -20,6 +21,9 @@ router.post('/ingredients', addIngredientById);
 
 // GET
 router.get('/ingredients', getAllIngredients);
+
+// PUT
+router.put('/ingredients', updateIngredientsById);
 
 // DELETE
 router.delete('/ingredients/:ingredientId', deleteIngredientById);

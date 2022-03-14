@@ -111,6 +111,49 @@ const getAllIngredients = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Update user's ingredient list with a new list of ingredient Ids
+ * @route   PUT /api/users/ingredients
+ * @access  Private
+ */
+const updateIngredientsById = asyncHandler(async (req, res) => {
+  // Error Handling if request body is empty
+  handleEmptyBody(req, res);
+
+  // Extract userId from req
+  const userId = req.userId;
+
+  // Deconstruct body from request
+  const { ingredientIds } = req.body;
+
+  // Find the user in the DB
+  const foundUser = await User.findById(userId).populate('ingredients');
+
+  // Error Handling if the user does not exist
+  if (!foundUser) {
+    res.status(404);
+    throw new Error('User does not exist');
+  }
+
+  // Replace user's current list of ingredients with passed in array of ingredients
+  foundUser.ingredients = ingredientIds;
+
+  // Update the user in the DB with the ingredients array
+  const updatedFoundUser = await foundUser.save();
+
+  if (!updatedFoundUser) {
+    res.status(500);
+    throw new Error(
+      `Server Error: Problem saving Ingredient ID ${ingredientId} to user's list of ingredients`
+    );
+  } else {
+    res.status(200).json({
+      message:
+        "Successfully saved new ingredients into user's list of ingredients",
+    });
+  }
+});
+
+/**
  * @desc    Delete an ingredient of specified id from the user's ingredients list
  * @route   DELETE /api/users/ingredients/:ingredientId
  * @access  Private
@@ -198,6 +241,7 @@ const deleteAllIngredientsById = asyncHandler(async (req, res) => {
 module.exports = {
   addIngredientById,
   getAllIngredients,
+  updateIngredientsById,
   deleteIngredientById,
   deleteAllIngredientsById,
 };
