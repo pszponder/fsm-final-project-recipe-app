@@ -16,12 +16,7 @@ function SelectIngredients() {
   useEffect(() => {
     const getAllIngredients = async () => {
       try {
-        const response = await axios.get('/api/ingredients', {
-          withCredentials: true,
-        });
-
-        // TODO: REMOVE
-        console.log('ingredientList :>> ', ingredientList);
+        const response = await axios.get('/api/ingredients');
 
         // Update the ingredientList
         setIngredientList(response.data);
@@ -32,12 +27,8 @@ function SelectIngredients() {
 
     const getUserIngredientList = async () => {
       try {
-        const response = await axios.get('/api/users/ingredients', {
-          withCredentials: true,
-        });
+        const response = await axios.get('/api/users/ingredients');
 
-        // TODO: REMOVE
-        console.log('userIngredientList :>> ', userIngredientList);
         // Update the ingredientList
         setUserIngredientList(response.data);
       } catch (error) {
@@ -48,40 +39,6 @@ function SelectIngredients() {
     getAllIngredients();
     getUserIngredientList();
   }, []);
-
-  // // Call the API to add an array of ingredients to the user's list of ingredients
-  // useEffect(() => {
-  //   const ingredientIds = userIngredientList.map(
-  //     (ingredient) => ingredient._id
-  //   );
-  //   console.log('ingredientIds', ingredientIds);
-
-  //   const removeAllIngredients = async () => {
-  //     try {
-  //       const response = await axios.delete('/api/users/ingredients', {
-  //         withCredentials: true,
-  //       });
-  //     } catch (error) {
-  //       console.log(`Error: ${error.message}`);
-  //     }
-  //   };
-
-  //   const addIngredients = async () => {
-  //     try {
-  //       const response = await axios.post(
-  //         '/api/users/ingredients',
-  //         { ingredientIds },
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //     } catch (error) {
-  //       console.log(`Error: ${error.message}`);
-  //     }
-  //   };
-  //   removeAllIngredients();
-  //   addIngredients();
-  // }, [userIngredientList]);
 
   const handleAddIngredient = (ingredient) => {
     // Check that ingredient isn't already in user's list
@@ -106,43 +63,22 @@ function SelectIngredients() {
     setUserIngredientList(filteredIngredients);
   };
 
-  // TODO: DOES THIS NEED TO BE USEEFFECT?
   const handleSave = () => {
-    console.log('TODO: FIX ME, NOT UPDATING DB PROPERLY');
     const ingredientIds = userIngredientList.map(
       (ingredient) => ingredient._id
     );
-    console.log('ingredientIds', ingredientIds);
 
-    const removeAllIngredients = async () => {
+    const updateAllIngredients = async () => {
       try {
-        const response = await axios.delete('/api/users/ingredients', {
-          withCredentials: true,
+        const response = await axios.put('/api/users/ingredients', {
+          ingredientIds,
         });
-        console.log('RESPONSE FROM REMOVING INGREDIENTS', response);
       } catch (error) {
         console.log(`Error: ${error.message}`);
       }
     };
 
-    const addIngredients = async () => {
-      console.log(ingredientIds);
-      try {
-        const response = await axios.post(
-          '/api/users/ingredients',
-          { ingredientIds },
-          {
-            withCredentials: true,
-          }
-        );
-        console.log('RESPONSE FROM ADDING INGREDIENTS', response);
-      } catch (error) {
-        console.log(`Error: ${error.message}`);
-      }
-    };
-
-    removeAllIngredients();
-    addIngredients();
+    updateAllIngredients();
   };
 
   return (
