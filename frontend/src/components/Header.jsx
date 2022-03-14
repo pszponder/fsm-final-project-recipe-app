@@ -18,6 +18,12 @@ function Header() {
           <li>
             <Link to="/logout">Logout</Link>
           </li>
+          <li>
+            <Link to="/recipe-list">Recipe List</Link>
+          </li>
+          <li>
+            <Link to="/recipe-detail">Detailed Recipe</Link>
+          </li>
         </ul>
       </header>
       <hr />
