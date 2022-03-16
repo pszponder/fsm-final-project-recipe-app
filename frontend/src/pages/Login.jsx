@@ -12,6 +12,7 @@ function Login() {
     email: '',
     password: '',
     loggedIn: false,
+    loginError: false,
   });
 
   // Since we will be using axios to send asynchronous events
@@ -20,18 +21,31 @@ function Login() {
     event.preventDefault();
     try {
       // Make a post request to the API
-      const response = await axios.post('/api/auth/login', loginData);
+      const response = await axios.post('/api/auth/login', {
+        email: loginData.email,
+        password: loginData.password,
+      });
+
+      console.log(response);
 
       // Store the accessToken in app state
       setAccessToken(response.data.accessToken);
 
-      // Update loggedIn state variable to be true
+      // Update loggedIn and loginError state variables
       setLoginData((prevState) => ({
         ...prevState,
+        loginError: false,
         loggedIn: true,
       }));
+
+      console.log(loginData.loggedIn);
     } catch (error) {
       console.log(error);
+
+      setLoginData((prevState) => ({
+        ...prevState,
+        loginError: true,
+      }));
     }
   };
 
@@ -80,6 +94,11 @@ function Login() {
                 <button type="submit">SUBMIT</button>
               </div>
             </form>
+          </section>
+          <section>
+            {loginData.loginError ? (
+              <h2>Please enter the correct login information</h2>
+            ) : null}
           </section>
           {/* TEST FIELD */}
           {/* <section>
