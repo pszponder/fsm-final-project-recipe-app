@@ -54,21 +54,20 @@ const registerUser = asyncHandler(async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   // Create a new user in the database
-  const user = await User.create({
-    firstName,
-    lastName,
-    email,
-    password: hashedPassword,
-  });
-
-  if (user) {
+  try {
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+    });
     res.status(201).json({
       _id: user.id,
       firstName,
       lastName,
       email,
     });
-  } else {
+  } catch (error) {
     res.status(400);
     throw new Error('Invalid user data');
   }
