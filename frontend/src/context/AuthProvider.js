@@ -13,10 +13,13 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   // Define state variables to share from within the context
   const [accessToken, setAccessToken] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     // Pass the state to the Context.Provider
-    <AuthContext.Provider value={{ accessToken, setAccessToken }}>
+    <AuthContext.Provider
+      value={{ accessToken, setAccessToken, loggedIn, setLoggedIn }}
+    >
       {children}
     </AuthContext.Provider>
   );
