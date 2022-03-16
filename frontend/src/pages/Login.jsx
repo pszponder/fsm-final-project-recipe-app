@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
 
@@ -10,6 +11,7 @@ function Login() {
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
+    loggedIn: false,
   });
 
   // Since we will be using axios to send asynchronous events
@@ -17,9 +19,17 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      // Make a post request to the API
       const response = await axios.post('/api/auth/login', loginData);
 
+      // Store the accessToken in app state
       setAccessToken(response.data.accessToken);
+
+      // Update loggedIn state variable to be true
+      setLoginData((prevState) => ({
+        ...prevState,
+        loggedIn: true,
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -33,42 +43,46 @@ function Login() {
   };
 
   return (
-    <div>
-      {/* HEADER SECTION */}
-      <section>
-        <h1>Login</h1>
-        <p>Please Login</p>
-      </section>
-      {/* FORM SECTION */}
-      <section>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              value={loginData.email}
-              placeholder="Email"
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              id="password"
-              name="password"
-              value={loginData.password}
-              placeholder="Password"
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <button type="submit">SUBMIT</button>
-          </div>
-        </form>
-      </section>
-      {/* TEST FIELD */}
-      <section>
+    <>
+      {loginData.loggedIn ? (
+        <Navigate to="/" />
+      ) : (
+        <div>
+          {/* HEADER SECTION */}
+          <section>
+            <h1>Login</h1>
+            <p>Please Login</p>
+          </section>
+          {/* FORM SECTION */}
+          <section>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  value={loginData.email}
+                  placeholder="Email"
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  id="password"
+                  name="password"
+                  value={loginData.password}
+                  placeholder="Password"
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <button type="submit">SUBMIT</button>
+              </div>
+            </form>
+          </section>
+          {/* TEST FIELD */}
+          {/* <section>
         <hr />
         <div>
           <h4>
@@ -78,8 +92,10 @@ function Login() {
             Password: <span>{loginData.password}</span>
           </h4>
         </div>
-      </section>
-    </div>
+      </section> */}
+        </div>
+      )}
+    </>
   );
 }
 
