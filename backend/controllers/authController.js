@@ -83,6 +83,15 @@ const loginUser = asyncHandler(async (req, res) => {
   // Destructure body data
   const { email, password } = req.body;
 
+  // Check if all data is entered
+  if (!email) {
+    res.status(400);
+    throw new Error('Please enter an email');
+  } else if (!password) {
+    res.status(400);
+    throw new Error('Please enter a password');
+  }
+
   // Check if the user exists in db using their email
   const foundUser = await User.findOne({ email });
 
@@ -90,6 +99,9 @@ const loginUser = asyncHandler(async (req, res) => {
   let correctPassword = false;
   if (foundUser) {
     correctPassword = await bcrypt.compare(password, foundUser.password);
+  } else {
+    res.status(401);
+    throw new Error('Invalid login credentials');
   }
 
   // Create Access and Refresh Tokens
@@ -118,7 +130,6 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(500);
     throw new Error('Server Error: Unable to Refresh Token');
   }
-
   if (foundUser && correctPassword) {
     // If email and password are correct, grant user access to App
     res.status(201);
