@@ -5,22 +5,29 @@ import DataContext from '../context/DataProvider';
 
 function Logout() {
   // Extract the state and setter shared from the AuthContext
-  const { accessToken, setAccessToken } = useContext(AuthContext);
+  const { setAccessToken, loggedIn, setLoggedIn } = useContext(AuthContext);
 
   // Extract the state and setter shared from the DataContext
   const { setIngredientList, setRecipeList, setUserIngredientList } =
     useContext(DataContext);
 
+  const [logoutError, setLogoutError] = useState(false);
+
   useEffect(() => {
     // Call the API Logout Endpoint
     const logoutUser = async () => {
       try {
-        const response = await axios.get('/api/auth/logout', {
+        await axios.get('/api/auth/logout', {
           withCredentials: true,
         });
-        console.log(response);
+
+        // Update state variables
+        setLogoutError(false);
+        setLoggedIn(false);
+        setAccessToken('');
       } catch (error) {
         console.log(`Error: ${error.message}`);
+        setLogoutError(true);
       }
     };
     logoutUser();
@@ -36,7 +43,7 @@ function Logout() {
 
   return (
     <div>
-      <h1>Successfully Logged Out</h1>
+      {loggedIn ? <h1>Error Logging Out</h1> : <h1>Successfully Logged Out</h1>}
     </div>
   );
 }
