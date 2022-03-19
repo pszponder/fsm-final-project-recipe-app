@@ -13,20 +13,25 @@ import RecipeDetail from './pages/RecipeDetail';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
+// IMPORT STYLING
+import './styles/app.css';
+
 // Create App Component
 function App() {
   return (
     <Router>
       <div className="App">
         <Header />
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/" element={<SelectIngredients />} />
-          <Route path="/recipe-list" element={<RecipeList />} />
-          <Route path="/recipe-detail" element={<RecipeDetail />} />
-        </Routes>
+        <div className="pages">
+          <Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/" element={<SelectIngredients />} />
+            <Route path="/recipe-list" element={<RecipeList />} />
+            <Route path="/recipe-detail" element={<RecipeDetail />} />
+          </Routes>
+        </div>
         <Footer />
       </div>
     </Router>
