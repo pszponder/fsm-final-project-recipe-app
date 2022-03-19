@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import AuthContext from '../context/AuthProvider';
 
 function Header() {
+  // Extract the state and setter shared from the AuthContext
+  const { loggedIn } = useContext(AuthContext);
   return (
     <div className="container">
       <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -22,19 +25,22 @@ function Header() {
               Recipe List
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink to="/login" className="nav-link">
-              Login
-            </NavLink>
-          </li>
+          {loggedIn ? (
+            <li className="nav-item">
+              <NavLink to="/logout" className="nav-link">
+                Logout
+              </NavLink>
+            </li>
+          ) : (
+            <li className="nav-item">
+              <NavLink to="/login" className="nav-link">
+                Login
+              </NavLink>
+            </li>
+          )}
           <li className="nav-item">
             <NavLink to="/register" className="nav-link">
               Register
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/logout" className="nav-link">
-              Logout
             </NavLink>
           </li>
         </ul>
