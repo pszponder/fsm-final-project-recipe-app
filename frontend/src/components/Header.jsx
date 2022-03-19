@@ -25,6 +25,11 @@ function Header() {
               Recipe List
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink to="/register" className="nav-link">
+              Register
+            </NavLink>
+          </li>
           {loggedIn ? (
             <li className="nav-item">
               <NavLink to="/logout" className="nav-link">
@@ -38,11 +43,6 @@ function Header() {
               </NavLink>
             </li>
           )}
-          <li className="nav-item">
-            <NavLink to="/register" className="nav-link">
-              Register
-            </NavLink>
-          </li>
         </ul>
       </header>
     </div>
