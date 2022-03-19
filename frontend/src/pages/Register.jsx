@@ -111,7 +111,7 @@ function Register() {
       )}
       <section>
         {registerError ? (
-          <div class="alert alert-danger form-register" role="alert">
+          <div className="alert alert-danger form-register" role="alert">
             Please enter the correct registration information
           </div>
         ) : null}
