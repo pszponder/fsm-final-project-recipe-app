@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 import axios from '../api/axios';
+import AuthContext from '../context/AuthProvider';
 import DataContext from '../context/DataProvider';
 
 function SelectIngredients() {
   // Extract the state and setter shared from the DataContext
+  const { loggedIn } = useContext(AuthContext);
+
   const {
     ingredientList,
     setIngredientList,
@@ -83,42 +87,48 @@ function SelectIngredients() {
 
   return (
     <div>
-      {/* INGREDIENTS LIST */}
-      <section>
-        <h2>INGREDIENTS LIST</h2>
-        {/* <ul>{mapList(ingredientList)}</ul> */}
-        <ul>
-          {ingredientList.map((ingredient) => (
-            <li key={ingredient._id}>
-              <h4>{ingredient.ingredientName}</h4>
-              <p>{ingredient.foodGroup}</p>
-              <p>{ingredient._id}</p>
-              <button onClick={() => handleAddIngredient(ingredient)}>
-                Add to User's List
-              </button>
-            </li>
-          ))}
-        </ul>
-      </section>
-      {/* USER'S INGREDIENTS LIST */}
-      <section>
-        <h2>USER'S INGREDIENTS LIST</h2>
-        <ul>
-          {userIngredientList.map((ingredient) => (
-            <li key={ingredient._id}>
-              <h4>{ingredient.ingredientName}</h4>
-              <p>{ingredient._id}</p>
-              <button onClick={() => handleRemoveIngredient(ingredient)}>
-                Remove from User's List
-              </button>
-            </li>
-          ))}
-        </ul>
-      </section>
-      {/* SAVE USER'S CURRENT INGREDIENTS LIST TO DB */}
-      <section>
-        <button onClick={handleSave}>SAVE TO DB</button>
-      </section>
+      {loggedIn ? (
+        <div>
+          {/* INGREDIENTS LIST */}
+          <section>
+            <h2>INGREDIENTS LIST</h2>
+            {/* <ul>{mapList(ingredientList)}</ul> */}
+            <ul>
+              {ingredientList.map((ingredient) => (
+                <li key={ingredient._id}>
+                  <h4>{ingredient.ingredientName}</h4>
+                  <p>{ingredient.foodGroup}</p>
+                  <p>{ingredient._id}</p>
+                  <button onClick={() => handleAddIngredient(ingredient)}>
+                    Add to User's List
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+          {/* USER'S INGREDIENTS LIST */}
+          <section>
+            <h2>USER'S INGREDIENTS LIST</h2>
+            <ul>
+              {userIngredientList.map((ingredient) => (
+                <li key={ingredient._id}>
+                  <h4>{ingredient.ingredientName}</h4>
+                  <p>{ingredient._id}</p>
+                  <button onClick={() => handleRemoveIngredient(ingredient)}>
+                    Remove from User's List
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+          {/* SAVE USER'S CURRENT INGREDIENTS LIST TO DB */}
+          <section>
+            <button onClick={handleSave}>SAVE TO DB</button>
+          </section>
+        </div>
+      ) : (
+        <Navigate to="/login" />
+      )}
     </div>
   );
 }

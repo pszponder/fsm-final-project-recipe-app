@@ -1,10 +1,13 @@
 import React, { useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
+import AuthContext from '../context/AuthProvider';
 import DataContext from '../context/DataProvider';
 
 function RecipeList() {
   // Extract the state and setter shared from the DataContext
+  const { loggedIn } = useContext(AuthContext);
+
   const { recipeList, setRecipeList, userIngredientList } =
     useContext(DataContext);
 
@@ -53,22 +56,28 @@ function RecipeList() {
 
   return (
     <div>
+      {loggedIn ? (
+        <section>
+          <h2>RECIPES LIST</h2>
+          <ul>
+            {recipeList.map((recipe) => {
+              return matchRecipe(recipe) ? (
+                <li key={recipe._id}>
+                  <h4>{recipe.recipeName}</h4>
+                  <p>{recipe.recipeDescription}</p>
+                  <p>{recipe._id}</p>
+                  <button onClick={() => handleClick(recipe)}>
+                    View Recipe
+                  </button>
+                </li>
+              ) : null;
+            })}
+          </ul>
+        </section>
+      ) : (
+        <Navigate to="/login" />
+      )}
       {/* RECIPE LIST */}
-      <section>
-        <h2>RECIPES LIST</h2>
-        <ul>
-          {recipeList.map((recipe) => {
-            return matchRecipe(recipe) ? (
-              <li key={recipe._id}>
-                <h4>{recipe.recipeName}</h4>
-                <p>{recipe.recipeDescription}</p>
-                <p>{recipe._id}</p>
-                <button onClick={() => handleClick(recipe)}>View Recipe</button>
-              </li>
-            ) : null;
-          })}
-        </ul>
-      </section>
     </div>
   );
 }
