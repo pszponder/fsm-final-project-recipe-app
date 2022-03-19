@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
 import '../styles/login.css';
@@ -49,43 +49,48 @@ function Login() {
   };
 
   return (
-    <>
-      <main className="form-signin">
-        {loggedIn ? (
-          <Navigate to="/" />
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <h1 className="h3 mb-3 fw-normal">Please Sign In</h1>
-            <div className="form-floating">
-              <input
-                type="email"
-                className="form-control"
-                placeholder="name@example.com"
-                id="email"
-                name="email"
-                value={loginData.email}
-                onChange={handleInputChange}
-              />
-              <label htmlFor="floatingInput">Email address</label>
-            </div>
-            <div className="form-floating">
-              <input
-                type="password"
-                className="form-control"
-                placeholder="Password"
-                id="password"
-                name="password"
-                value={loginData.password}
-                onChange={handleInputChange}
-              />
-              <label htmlFor="floatingPassword">Password</label>
-            </div>
-            <button className="w-100 btn btn-lg btn-primary" type="submit">
-              Sign in
-            </button>
-          </form>
-        )}
-      </main>
+    <main className="form-signin">
+      {loggedIn ? (
+        <Navigate to="/" />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <h1 className="h3 mb-3 fw-normal">Please Sign In</h1>
+          <div className="form-floating">
+            <input
+              type="email"
+              className="form-control"
+              placeholder="name@example.com"
+              id="email"
+              name="email"
+              value={loginData.email}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="floatingInput">Email address</label>
+          </div>
+          <div className="form-floating">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Password"
+              id="password"
+              name="password"
+              value={loginData.password}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="floatingPassword">Password</label>
+          </div>
+          <button className="w-100 btn btn-lg btn-primary" type="submit">
+            Sign in
+          </button>
+
+          <p className="mt-4">
+            New to What's Cooking? Register
+            <NavLink to="/register" className="link badge badge-primary">
+              here
+            </NavLink>
+          </p>
+        </form>
+      )}
       <section>
         {loginError ? (
           <div class="alert alert-danger form-signin" role="alert">
@@ -93,7 +98,7 @@ function Login() {
           </div>
         ) : null}
       </section>
-    </>
+    </main>
   );
 }
 

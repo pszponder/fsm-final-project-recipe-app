@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 import axios from '../api/axios';
 import '../styles/register.css';
 
@@ -44,67 +44,71 @@ function Register() {
   };
 
   return (
-    <>
-      <main className="form-register">
-        {registerSuccess ? (
-          <Navigate to="/login" />
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <h1 className="h3 mb-3 fw-normal">Please Create an Account</h1>
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="firstName"
-                name="firstName"
-                value={registerData.firstName}
-                placeholder="First Name"
-                onChange={handleInputChange}
-              />
-              <label htmlFor="floatingInput">First Name</label>
-            </div>
-            <div className="form-floating">
-              <input
-                className="form-control"
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={registerData.lastName}
-                placeholder="Last Name"
-                onChange={handleInputChange}
-              />
-              <label htmlFor="floatingInput">Last Name</label>
-            </div>
-            <div className="form-floating">
-              <input
-                type="email"
-                className="form-control"
-                placeholder="name@example.com"
-                id="email"
-                name="email"
-                value={registerData.email}
-                onChange={handleInputChange}
-              />
-              <label htmlFor="floatingInput">Email address</label>
-            </div>
-            <div className="form-floating">
-              <input
-                type="password"
-                className="form-control"
-                placeholder="Password"
-                id="password"
-                name="password"
-                value={registerData.password}
-                onChange={handleInputChange}
-              />
-              <label htmlFor="floatingPassword">Password</label>
-            </div>
-            <button className="w-100 btn btn-lg btn-primary" type="submit">
-              Register
-            </button>
-          </form>
-        )}
-      </main>
+    <main className="form-register">
+      {registerSuccess ? (
+        <Navigate to="/login" />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <h1 className="h3 mb-3 fw-normal">Please Create an Account</h1>
+          <div className="form-floating">
+            <input
+              type="text"
+              className="form-control"
+              id="firstName"
+              name="firstName"
+              value={registerData.firstName}
+              placeholder="First Name"
+              onChange={handleInputChange}
+            />
+            <label htmlFor="floatingInput">First Name</label>
+          </div>
+          <div className="form-floating">
+            <input
+              className="form-control"
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={registerData.lastName}
+              placeholder="Last Name"
+              onChange={handleInputChange}
+            />
+            <label htmlFor="floatingInput">Last Name</label>
+          </div>
+          <div className="form-floating">
+            <input
+              type="email"
+              className="form-control"
+              placeholder="name@example.com"
+              id="email"
+              name="email"
+              value={registerData.email}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="floatingInput">Email address</label>
+          </div>
+          <div className="form-floating">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Password"
+              id="password"
+              name="password"
+              value={registerData.password}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="floatingPassword">Password</label>
+          </div>
+          <button className="w-100 btn btn-lg btn-primary" type="submit">
+            Register
+          </button>
+          <p className="mt-4">
+            Already registered? Signin
+            <NavLink to="/login" className="link badge badge-primary">
+              here
+            </NavLink>
+          </p>
+        </form>
+      )}
       <section>
         {registerError ? (
           <div class="alert alert-danger form-register" role="alert">
@@ -112,7 +116,7 @@ function Register() {
           </div>
         ) : null}
       </section>
-    </>
+    </main>
   );
 }
 
