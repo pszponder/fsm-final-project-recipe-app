@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 import DataContext from '../context/DataProvider';
 
 function RecipeList() {
   // Extract the state and setter shared from the DataContext
-  const {
-    recipeList,
-    setRecipeList,
-    userIngredientList,
-    setUserIngredientList,
-  } = useContext(DataContext);
+  const { recipeList, setRecipeList, userIngredientList } =
+    useContext(DataContext);
 
   // Create a navigate function to navigate to Recipe Detail
   const navigateRecipeDetail = useNavigate();
@@ -19,9 +15,6 @@ function RecipeList() {
   const handleClick = (recipe) => {
     navigateRecipeDetail('/recipe-detail', { state: recipe });
   };
-
-  // // Convert the name of the
-  // const userIngredientsNames = userIngredientList.map(ingredient => ingredient.ingredientName);
 
   // Call the API to extract recipe list on component load
   //  (pass in empty array as 2nd argument)

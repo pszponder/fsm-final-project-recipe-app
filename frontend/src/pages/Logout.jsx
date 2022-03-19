@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
 import DataContext from '../context/DataProvider';
+import '../styles/logout.css';
 
 function Logout() {
   // Extract the state and setter shared from the AuthContext
@@ -42,10 +43,17 @@ function Logout() {
   }, []);
 
   return (
-    <div>
-      {loggedIn ? <h1>Error Logging Out</h1> : <h1>Successfully Logged Out</h1>}
+    <div className="form-signout">
+      {loggedIn ? (
+        <div class="alert alert-danger" role="alert">
+          Error Logging Out
+        </div>
+      ) : (
+        <div class="alert alert-success" role="alert">
+          Successfully Logged Out
+        </div>
+      )}
     </div>
   );
 }
-
 export default Logout;

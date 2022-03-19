@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from '../api/axios';
+import '../styles/register.css';
 
 function Register() {
   // Define initial state and state setter
@@ -44,68 +45,71 @@ function Register() {
 
   return (
     <>
-      {registerSuccess ? (
-        <Navigate to="/login" />
-      ) : (
-        <div>
-          {/* HEADER SECTION */}
-          <section>
-            <h1>REGISTER</h1>
-            <p>Please Create an Account</p>
-          </section>
-          {/* FORM SECTION*/}
-          <section>
-            <form onSubmit={handleSubmit}>
-              <div>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={registerData.firstName}
-                  placeholder="First Name"
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={registerData.lastName}
-                  placeholder="Last Name"
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  value={registerData.email}
-                  placeholder="Email"
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  id="password"
-                  name="password"
-                  value={registerData.password}
-                  placeholder="Password"
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <button type="submit">SUBMIT</button>
-              </div>
-            </form>
-          </section>
-        </div>
-      )}
+      <main className="form-register">
+        {registerSuccess ? (
+          <Navigate to="/login" />
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <h1 className="h3 mb-3 fw-normal">Please Create an Account</h1>
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="firstName"
+                name="firstName"
+                value={registerData.firstName}
+                placeholder="First Name"
+                onChange={handleInputChange}
+              />
+              <label htmlFor="floatingInput">First Name</label>
+            </div>
+            <div className="form-floating">
+              <input
+                className="form-control"
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={registerData.lastName}
+                placeholder="Last Name"
+                onChange={handleInputChange}
+              />
+              <label htmlFor="floatingInput">Last Name</label>
+            </div>
+            <div className="form-floating">
+              <input
+                type="email"
+                className="form-control"
+                placeholder="name@example.com"
+                id="email"
+                name="email"
+                value={registerData.email}
+                onChange={handleInputChange}
+              />
+              <label htmlFor="floatingInput">Email address</label>
+            </div>
+            <div className="form-floating">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Password"
+                id="password"
+                name="password"
+                value={registerData.password}
+                onChange={handleInputChange}
+              />
+              <label htmlFor="floatingPassword">Password</label>
+            </div>
+            <button className="w-100 btn btn-lg btn-primary" type="submit">
+              Register
+            </button>
+          </form>
+        )}
+      </main>
       <section>
         {registerError ? (
-          <h2>Please enter the correct register information</h2>
+          <div class="alert alert-danger form-register" role="alert">
+            Please enter the correct registration information
+          </div>
         ) : null}
       </section>
     </>

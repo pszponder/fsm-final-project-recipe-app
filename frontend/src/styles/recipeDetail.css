@@ -1,0 +1,13 @@
+.recipe-detail {
+  margin-bottom: 4rem;
+}
+.recipe-detail-title {
+  margin-bottom: 0.25rem;
+  font-size: 2.5rem;
+}
+
+article {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

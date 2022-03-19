@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
+import '../styles/login.css';
 
 function Login() {
   // Extract the state and setter shared from the AuthContext
@@ -49,48 +50,47 @@ function Login() {
 
   return (
     <>
-      {loggedIn ? (
-        <Navigate to="/" />
-      ) : (
-        <div>
-          {/* HEADER SECTION */}
-          <section>
-            <h1>Login</h1>
-            <p>Please Login</p>
-          </section>
-          {/* FORM SECTION */}
-          <section>
-            <form onSubmit={handleSubmit}>
-              <div>
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  value={loginData.email}
-                  placeholder="Email"
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  id="password"
-                  name="password"
-                  value={loginData.password}
-                  placeholder="Password"
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <button type="submit">SUBMIT</button>
-              </div>
-            </form>
-          </section>
-        </div>
-      )}
+      <main className="form-signin">
+        {loggedIn ? (
+          <Navigate to="/" />
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <h1 className="h3 mb-3 fw-normal">Please Sign In</h1>
+            <div className="form-floating">
+              <input
+                type="email"
+                className="form-control"
+                placeholder="name@example.com"
+                id="email"
+                name="email"
+                value={loginData.email}
+                onChange={handleInputChange}
+              />
+              <label htmlFor="floatingInput">Email address</label>
+            </div>
+            <div className="form-floating">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Password"
+                id="password"
+                name="password"
+                value={loginData.password}
+                onChange={handleInputChange}
+              />
+              <label htmlFor="floatingPassword">Password</label>
+            </div>
+            <button className="w-100 btn btn-lg btn-primary" type="submit">
+              Sign in
+            </button>
+          </form>
+        )}
+      </main>
       <section>
         {loginError ? (
-          <h2>Please enter the correct login information</h2>
+          <div class="alert alert-danger form-signin" role="alert">
+            Please enter the correct login information
+          </div>
         ) : null}
       </section>
     </>
