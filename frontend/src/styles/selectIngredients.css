@@ -1,0 +1,13 @@
+.ingredients-list, .ingredients-userlist {
+  margin-bottom: 4rem;
+}
+.ingredients-list-title, .ingredients-userlist-title {
+  margin-bottom: 0.25rem;
+  font-size: 2.5rem;
+}
+
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

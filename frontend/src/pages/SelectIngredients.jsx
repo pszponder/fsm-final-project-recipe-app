@@ -82,38 +82,60 @@ function SelectIngredients() {
   };
 
   return (
+
     <div>
       {/* INGREDIENTS LIST */}
-      <section>
-        <h2>INGREDIENTS LIST</h2>
+      <section className="ingredients-list">
+        <h2 className='ingredients-list-title'>{}</h2>
+        <p className='pb-4 border-bottom'>{}</p>
+        <h3>INGREDIENTS LIST</h3>
         {/* <ul>{mapList(ingredientList)}</ul> */}
-        <ul>
-          {ingredientList.map((ingredient) => (
-            <li key={ingredient._id}>
-              <h4>{ingredient.ingredientName}</h4>
-              <p>{ingredient.foodGroup}</p>
-              <p>{ingredient._id}</p>
-              <button onClick={() => handleAddIngredient(ingredient)}>
-                Add to User's List
-              </button>
-            </li>
-          ))}
-        </ul>
+        <table className='table'>
+          <thead>
+              <tr>
+                <th>Name</th>
+                <th>Food Group</th>
+                <th>Ingredient Id</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ingredientList.map((ingredient) => (
+                <tr key={ingredient._id}>
+                  <td>{ingredient.ingredientName}</td>
+                  <td>{ingredient.foodGroup}</td>
+                  <td>{ingredient._id}</td>
+                  <button onClick={() => handleAddIngredient(ingredient)}>
+                    Add to User's List
+                  </button>
+                </tr>
+              ))}
+            </tbody>
+        </table>
       </section>
       {/* USER'S INGREDIENTS LIST */}
-      <section>
+      <section className='ingredients-userlist'>
+      <h2 className='ingredients-userlist-title'>{}</h2>
+        <p className='pb-4 border-bottom'>{}</p>
         <h2>USER'S INGREDIENTS LIST</h2>
-        <ul>
+        <table className='table'>
+          <thead>
+              <tr>
+                <th>Name</th>
+                <th>Ingredient Id</th>
+              </tr>
+            </thead>
+            <tbody>
           {userIngredientList.map((ingredient) => (
-            <li key={ingredient._id}>
-              <h4>{ingredient.ingredientName}</h4>
-              <p>{ingredient._id}</p>
+            <tr key={ingredient._id}>
+              <td>{ingredient.ingredientName}</td>
+              <td>{ingredient._id}</td>
               <button onClick={() => handleRemoveIngredient(ingredient)}>
                 Remove from User's List
               </button>
-            </li>
+            </tr>
           ))}
-        </ul>
+          </tbody>
+        </table>
       </section>
       {/* SAVE USER'S CURRENT INGREDIENTS LIST TO DB */}
       <section>
