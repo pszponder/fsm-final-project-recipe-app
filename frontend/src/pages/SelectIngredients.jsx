@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from '../api/axios';
+import AuthContext from '../context/AuthProvider';
 import DataContext from '../context/DataProvider';
 import { useNavigate, Link } from 'react-router-dom';
 
 function SelectIngredients() {
   // Extract the state and setter shared from the DataContext
+  const { loggedIn } = useContext(AuthContext);
+
   const {
     ingredientList,
     setIngredientList,
@@ -94,15 +97,14 @@ function SelectIngredients() {
  
 
   return (
-
     <div>
       {/* INGREDIENTS LIST */}
       <article className="ingredients-list">
-        <h2 className='ingredients-list-title'>{}</h2>
-        <p className='pb-4 border-bottom'>{}</p>
+        <h2 className="ingredients-list-title">{}</h2>
+        <p className="pb-4 border-bottom">{}</p>
         <h3>INGREDIENTS LIST</h3>
         {/* <ul>{mapList(ingredientList)}</ul> */}
-        <table className='table'>
+        <table className="table">
           <thead>
               <tr>
                 <th>Name</th>
@@ -123,27 +125,27 @@ function SelectIngredients() {
         </table>
       </article>
       {/* USER'S INGREDIENTS LIST */}
-      <article className='ingredients-userlist'>
-      <h2 className='ingredients-userlist-title'>{}</h2>
-        <p className='pb-4 border-bottom'>{}</p>
+      <article className="ingredients-userlist">
+        <h2 className="ingredients-userlist-title">{}</h2>
+        <p className="pb-4 border-bottom">{}</p>
         <h2>USER'S INGREDIENTS LIST</h2>
-        <table className='table'>
+        <table className="table">
           <thead>
               <tr>
                 <th>Ingredients Selected</th>
-
+                <th>Ingredient Name</th>
               </tr>
-            </thead>
-            <tbody>
-          {userIngredientList.map((ingredient) => (
-            <tr key={ingredient._id}>
-              <td>{ingredient.ingredientName}</td>
-
-              <button onClick={() => handleRemoveIngredient(ingredient)}>
-                Remove from User's List
-              </button>
-            </tr>
-          ))}
+          </thead>
+          <tbody>
+            {userIngredientList.map((ingredient) => (
+              <tr key={ingredient._id}>
+                <td>{ingredient.ingredientName}</td>
+                <td>{ingredient._id}</td>
+                <button onClick={() => handleRemoveIngredient(ingredient)}>
+                  Remove from User's List
+                </button>
+              </tr>
+            ))}
           </tbody>
         </table>
       </article>

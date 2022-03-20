@@ -45,11 +45,11 @@ function Logout() {
   return (
     <div className="form-signout">
       {loggedIn ? (
-        <div class="alert alert-danger" role="alert">
+        <div className="alert alert-danger" role="alert">
           Error Logging Out
         </div>
       ) : (
-        <div class="alert alert-success" role="alert">
+        <div className="alert alert-success" role="alert">
           Successfully Logged Out
         </div>
       )}

@@ -1,10 +1,14 @@
 import React, { useEffect, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
+import AuthContext from '../context/AuthProvider';
 import DataContext from '../context/DataProvider';
+import '../styles/recipeList.css';
 
 function RecipeList() {
   // Extract the state and setter shared from the DataContext
+  const { loggedIn } = useContext(AuthContext);
+
   const { recipeList, setRecipeList, userIngredientList } =
     useContext(DataContext);
 
@@ -41,7 +45,6 @@ function RecipeList() {
 
     for (const recipeIngredientName of recipeIngredientNames) {
       for (const userIngredientName of userIngredientList) {
-        console.log(recipeIngredientName, userIngredientName.ingredientName);
         if (recipeIngredientName === userIngredientName.ingredientName) {
           return true;
         }
@@ -51,27 +54,47 @@ function RecipeList() {
     return false;
   };
 
+  // If the user hasn't selected any ingredients, return an error message
+  if (userIngredientList.length === 0 && loggedIn) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Please select ingredients to receive recipe recommendations.
+      </div>
+    );
+  }
+
   return (
     <div>
-      {/* RECIPE LIST */}
-      <section>
-        <h2>RECIPES LIST</h2>
-        <ul>
-          {recipeList.map((recipe) => {
-            return matchRecipe(recipe) ? (
-              <li key={recipe._id}>
-                <h4>{recipe.recipeName}</h4>
-                <p>{recipe.recipeDescription}</p>
-                <p>{recipe._id}</p>
-                <button onClick={() => handleClick(recipe)}>View Recipe</button>
-              </li>
-            ) : null;
-          })}
-        </ul>
-        <Link to="/" className="btn btn-primary">
-          Back Ingredient List
-        </Link>
-      </section>
+      {loggedIn && userIngredientList.length > 0 ? (
+        <section>
+          <h1>Recipes List</h1>
+          <div className="card-group">
+            {recipeList.map((recipe) => {
+              return matchRecipe(recipe) ? (
+                <div className="card" key={recipe._id}>
+                  <img
+                    className="card-img-top"
+                    src="https://picsum.photos/200/100"
+                    alt="Recipe"
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{recipe.recipeName}</h5>
+                    <p className="card-text">{recipe.recipeDescription}</p>
+                  </div>
+                  <button
+                    className="btn btn-primary mb-3"
+                    onClick={() => handleClick(recipe)}
+                  >
+                    View Recipe
+                  </button>
+                </div>
+              ) : null;
+            })}
+          </div>
+        </section>
+      ) : (
+        <Navigate to="/login" />
+      )}
     </div>
   );
 }

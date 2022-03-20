@@ -93,7 +93,7 @@ function Login() {
       )}
       <section>
         {loginError ? (
-          <div class="alert alert-danger form-signin" role="alert">
+          <div className="alert alert-danger form-signin" role="alert">
             Please enter the correct login information
           </div>
         ) : null}
