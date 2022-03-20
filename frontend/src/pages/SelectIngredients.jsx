@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from '../api/axios';
 import DataContext from '../context/DataProvider';
+import { useNavigate, Link } from 'react-router-dom';
 
 function SelectIngredients() {
   // Extract the state and setter shared from the DataContext
@@ -10,6 +11,14 @@ function SelectIngredients() {
     userIngredientList,
     setUserIngredientList,
   } = useContext(DataContext);
+
+  // Create a navigate function to navigate to Recipe Detail
+  const navigateRecipeList = useNavigate();
+
+  // Create a function which will navigate to the Recipe Detail
+  const handleClick = (recipeList) => {
+    navigateRecipeList('/recipe-list', { state: recipeList });
+  };
 
   // Call the API to extract ingredients and user ingredients list
   //  on component load (pass in empty array as 2nd argument)
@@ -85,7 +94,7 @@ function SelectIngredients() {
 
     <div>
       {/* INGREDIENTS LIST */}
-      <section className="ingredients-list">
+      <article className="ingredients-list">
         <h2 className='ingredients-list-title'>{}</h2>
         <p className='pb-4 border-bottom'>{}</p>
         <h3>INGREDIENTS LIST</h3>
@@ -111,9 +120,9 @@ function SelectIngredients() {
               ))}
             </tbody>
         </table>
-      </section>
+      </article>
       {/* USER'S INGREDIENTS LIST */}
-      <section className='ingredients-userlist'>
+      <article className='ingredients-userlist'>
       <h2 className='ingredients-userlist-title'>{}</h2>
         <p className='pb-4 border-bottom'>{}</p>
         <h2>USER'S INGREDIENTS LIST</h2>
@@ -136,13 +145,23 @@ function SelectIngredients() {
           ))}
           </tbody>
         </table>
-      </section>
+      </article>
       {/* SAVE USER'S CURRENT INGREDIENTS LIST TO DB */}
       <section>
-        <button onClick={handleSave}>SAVE TO DB</button>
+       <button className=" btn btn btn-primary py-2 px-4 rounded" 
+          type="submit"  
+          onClick={handleSave}>
+            Save to DB
+        </button>
+      
+        <Link to="/recipe-list" className=" btn btn-primary py-2 px-4 rounded">
+            Get Recipe List
+        </Link>
       </section>
     </div>
   );
 }
 
 export default SelectIngredients;
+
+//<button className='btn btn-save' onClick={handleSave}>SAVE TO DB</button>

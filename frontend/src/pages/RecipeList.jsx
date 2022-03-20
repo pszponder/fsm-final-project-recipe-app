@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from '../api/axios';
 import DataContext from '../context/DataProvider';
 
@@ -68,6 +68,9 @@ function RecipeList() {
             ) : null;
           })}
         </ul>
+        <Link to="/" className="btn btn-primary">
+          Back Ingredient List
+        </Link>
       </section>
     </div>
   );
