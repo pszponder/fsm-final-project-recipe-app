@@ -8,6 +8,8 @@ import Logout from './pages/Logout';
 import SelectIngredients from './pages/SelectIngredients';
 import RecipeList from './pages/RecipeList';
 import RecipeDetail from './pages/RecipeDetail';
+import RecipeSearch from './pages/RecipeSearch';
+import Recipe from './pages/Recipe';
 
 // IMPORT COMPONENTS
 import Header from './components/Header';
@@ -30,6 +32,8 @@ function App() {
             <Route path="/" element={<SelectIngredients />} />
             <Route path="/recipe-list" element={<RecipeList />} />
             <Route path="/recipe-detail" element={<RecipeDetail />} />
+            <Route path="/recipe-search" element={<RecipeSearch />} />
+            <Route path="/recipe" element={<Recipe />} />
           </Routes>
         </div>
         <Footer />
