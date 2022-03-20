@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
-import {FaSearch, FaSignInAlt, FaSingOutAlt, FaUser} from 'react-icons/fa'
+import { FaSearch, FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
 
 function Header() {
   // Extract the state and setter shared from the AuthContext
@@ -23,24 +23,28 @@ function Header() {
           </li>
           <li className="nav-item">
             <NavLink to="/recipe-list" className="nav-link">
-            <FaSearch />Recipe List
+              <FaSearch />
+              Recipe List
             </NavLink>
           </li>
           <li className="nav-item">
             <NavLink to="/register" className="nav-link">
-            <FaUser />Register
+              <FaUser />
+              Register
             </NavLink>
           </li>
           {loggedIn ? (
             <li className="nav-item">
               <NavLink to="/logout" className="nav-link">
-              <FaSingOutAlt />Logout
+                <FaSignOutAlt />
+                Logout
               </NavLink>
             </li>
           ) : (
             <li className="nav-item">
               <NavLink to="/login" className="nav-link">
-              <FaSignInAlt/>Login
+                <FaSignInAlt />
+                Login
               </NavLink>
             </li>
           )}
