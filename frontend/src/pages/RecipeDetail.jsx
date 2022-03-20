@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import '../styles/recipeDetail.css';
 
 function RecipeDetail() {
   // Extract the state which was passed into the location object by useNavigate
@@ -9,7 +10,7 @@ function RecipeDetail() {
   return (
     <>
       <article className="recipe-detail">
-        <h2 className="recipe-detail-title">{state.recipeName}</h2>
+        <h1 className="recipe-detail-title">{state.recipeName}</h1>
         <p className="pb-4 border-bottom">{state.recipeDescription}</p>
         <h3>Recipe Ingredients</h3>
         <p>Here is a list of ingredients required to complete the recipe:</p>

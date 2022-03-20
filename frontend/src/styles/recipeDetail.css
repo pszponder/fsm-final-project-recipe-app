@@ -8,6 +8,25 @@
 
 article {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+}
+
+p {
+  text-align: left;
+}
+
+p::first-letter {
+  text-transform: capitalize;
+}
+
+h1 {
+  text-transform: capitalize;
+  padding-bottom: 2rem;
+}
+
+.btn {
+  max-width: max-content;
+  margin: 0 auto;
+  margin-top: 2rem;
 }
