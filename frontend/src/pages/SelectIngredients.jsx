@@ -90,6 +90,9 @@ function SelectIngredients() {
     updateAllIngredients();
   };
 
+  
+ 
+
   return (
 
     <div>
@@ -104,7 +107,6 @@ function SelectIngredients() {
               <tr>
                 <th>Name</th>
                 <th>Food Group</th>
-                <th>Ingredient Id</th>
               </tr>
             </thead>
             <tbody>
@@ -112,7 +114,6 @@ function SelectIngredients() {
                 <tr key={ingredient._id}>
                   <td>{ingredient.ingredientName}</td>
                   <td>{ingredient.foodGroup}</td>
-                  <td>{ingredient._id}</td>
                   <button onClick={() => handleAddIngredient(ingredient)}>
                     Add to User's List
                   </button>
@@ -129,15 +130,15 @@ function SelectIngredients() {
         <table className='table'>
           <thead>
               <tr>
-                <th>Name</th>
-                <th>Ingredient Id</th>
+                <th>Ingredients Selected</th>
+
               </tr>
             </thead>
             <tbody>
           {userIngredientList.map((ingredient) => (
             <tr key={ingredient._id}>
               <td>{ingredient.ingredientName}</td>
-              <td>{ingredient._id}</td>
+
               <button onClick={() => handleRemoveIngredient(ingredient)}>
                 Remove from User's List
               </button>
@@ -148,13 +149,13 @@ function SelectIngredients() {
       </article>
       {/* SAVE USER'S CURRENT INGREDIENTS LIST TO DB */}
       <section>
-       <button className=" btn btn btn-primary py-2 px-4 rounded" 
+       <button className=" btn btn btn-primary py-2 px-4 rounded m-5" 
           type="submit"  
           onClick={handleSave}>
             Save to DB
         </button>
       
-        <Link to="/recipe-list" className=" btn btn-primary py-2 px-4 rounded">
+        <Link to="/recipe-list" className=" btn btn-primary py-2 px-4 rounded m-5">
             Get Recipe List
         </Link>
       </section>
