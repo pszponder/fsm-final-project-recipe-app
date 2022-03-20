@@ -143,7 +143,7 @@ function SelectIngredients() {
           {/* SAVE USER'S CURRENT INGREDIENTS LIST TO DB */}
           <section>
             <button
-              className=" btn btn btn-primary py-2 px-4 rounded m-5"
+              className="btn btn-primary py-2 px-4 rounded m-5"
               type="submit"
               onClick={handleSave}
             >
@@ -152,7 +152,7 @@ function SelectIngredients() {
 
             <Link
               to="/recipe-list"
-              className=" btn btn-primary py-2 px-4 rounded m-5"
+              className="btn btn-primary py-2 px-4 rounded m-5"
             >
               Get Recipe List
             </Link>
