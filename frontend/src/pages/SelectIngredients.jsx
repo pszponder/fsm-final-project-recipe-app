@@ -140,7 +140,6 @@ function SelectIngredients() {
             {userIngredientList.map((ingredient) => (
               <tr key={ingredient._id}>
                 <td>{ingredient.ingredientName}</td>
-                <td>{ingredient._id}</td>
                 <button onClick={() => handleRemoveIngredient(ingredient)}>
                   Remove from User's List
                 </button>
