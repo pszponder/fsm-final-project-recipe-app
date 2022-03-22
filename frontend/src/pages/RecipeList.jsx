@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
 import DataContext from '../context/DataProvider';
@@ -95,7 +95,12 @@ function RecipeList() {
       ) : (
         <Navigate to="/login" />
       )}
+
+      <Link to="/" className="btn btn-primary mb-3">
+        Back to Select Ingredients
+      </Link>
     </div>
+
   );
 }
 
