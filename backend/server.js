@@ -6,14 +6,21 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // Custom Middleware
 const { errorHandler } = require('./middleware/errorHandler');
+const { refreshJWTAccessToken } = require('./middleware/refreshJWTAccessToken');
+const { verifyJWTAccessToken } = require('./middleware/verifyJWTAccessToken');
+
+const corsOptions = require('./config/corsOptions');
+const setCorsCredentials = require('./middleware/setCorsCredentials');
 
 // ==========================
 // LOAD ENVIRONMENT VARIABLES
 // ==========================
-dotenv.config(); // Load .env file contents into process.env.
+dotenv.config(); // Load .env file contents into process.env
 
 // =======================================
 // INITIALIZE CONNECTION TO MONGODB SERVER
@@ -33,18 +40,31 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Middleware to parse cookie data
+app.use(cookieParser());
+
+// Set request header credentials for CORS if request if from approved list
+app.use(setCorsCredentials);
+app.use(cors(corsOptions)); // Enable CORS and pass in CORS configuration object
+
 // =====================
 // SETUP ROUTE ENDPOINTS
 // =====================
-app.use('/api/users', require('./routes/authRoutes'));
+// Route to handle authorization (register, login, logout)
+app.use('/api/auth', require('./routes/authRoutes'));
+
+// Handle JWT Access and Refresh Tokens
+app.use(refreshJWTAccessToken); // Refresh the access token
+app.use(verifyJWTAccessToken); // If we have authorization, Continue
+
+app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/ingredients', require('./routes/ingredientRoutes'));
 app.use('/api/recipes', require('./routes/recipeRoutes'));
 
-// ======================================
-// INITIALIZE CUSTOM MODULES / MIDDLEWARE
-// ======================================
-
-// Overwrite Default ExpressJS error handling
+// ==============
+// ERROR HANDLING
+// ==============
+// Overwrite Default ExpressJS error handling with custom middleware
 app.use(errorHandler);
 
 // ======================================

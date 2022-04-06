@@ -1,0 +1,29 @@
+.ingredients-list, .ingredients-userlist {
+  margin-bottom: 4rem;
+}
+.ingredients-list-title, .ingredients-userlist-title {
+  margin-bottom: 0.25rem;
+  font-size: 2.5rem;
+}
+
+article {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link, 
+.link:hover {
+  margin-left: 3px;
+  text-decoration: none;
+  color: white;
+  background-color: hsl(216, 90%, 44%);
+}
+
+button, button:hover{
+  margin-left: 3px;
+  text-decoration: none;
+  color: white;
+  background-color: hsl(216, 90%, 44%);
+}
+

@@ -1,0 +1,14 @@
+p,
+h5 {
+  text-align: center;
+}
+
+p::first-letter,
+h5 {
+  text-transform: capitalize;
+}
+
+.btn {
+  max-width: max-content;
+  margin: 0 auto;
+}
